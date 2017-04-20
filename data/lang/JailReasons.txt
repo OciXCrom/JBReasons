@@ -1,0 +1,95 @@
+﻿[en]
+JBR_TITLE_WHY = \r[JailBreak Reasons]^n\yWhy did you kill \r%s\y?\d
+JBR_TITLE_CUSTOM = ^n\yPress \r't' \yfor a custom reason.\d
+JBR_TITLE_DENY = ^n\yPress \r'n' \yto deny this kill.\d
+JBR_MENU_BACK = Previous page
+JBR_MENU_NEXT = Next page
+JBR_MENU_EXIT = Close the menu
+JBR_KILL_DENY = !t%s !ndenied the death of !t%s !n%L.
+JBR_KILL_REVIVE = therefore he got revived
+JBR_KILL_SORRY = and says sorry
+JBR_KILL_REASON = !t%s !nkilled !t%s!n. Reason: !g%s
+
+[mk]
+JBR_TITLE_WHY = \r[JailBreak Reasons]^n\yZashto go ubi \r%s\y?\d
+JBR_TITLE_CUSTOM = ^n\yStisni \r't' \yza sopstvena prichina.\d
+JBR_TITLE_DENY = ^n\yStisni \r'n' \yza da go negirash ubistvoto.\d
+JBR_MENU_BACK = Prethodna stranica
+JBR_MENU_NEXT = Sledna stranica
+JBR_MENU_EXIT = Zatvori go menuto
+JBR_KILL_DENY = !t%s !ngo negira ubistvoto na !t%s !n%L.
+JBR_KILL_REVIVE = i zatoa toj beshe ozhivean
+JBR_KILL_SORRY = i se izvinuva
+JBR_KILL_REASON = !t%s !ngo ubi !t%s!n. Prichina: !g%s
+
+[bg]
+JBR_TITLE_WHY = \r[JailBreak Reasons]^n\yZashto ubi \r%s\y?\d
+JBR_TITLE_CUSTOM = ^n\yCukni \r't' \yza sobstvena prichina.\d
+JBR_TITLE_DENY = ^n\yCukni \r'n' \yza da otrechesh ubiistvoto.\d
+JBR_MENU_BACK = Predishna stranica
+JBR_MENU_NEXT = Sledvashta stranica
+JBR_MENU_EXIT = Zatvori menuto
+JBR_KILL_DENY = !t%s !notreche ubiistvoto na !t%s !n%L.
+JBR_KILL_REVIVE = i zatova toi be sujiven
+JBR_KILL_SORRY = i se izvinqva
+JBR_KILL_REASON = !t%s !nubi !t%s!n. Prichina: !g%s
+
+[sr]
+JBR_TITLE_WHY = \r[JailBreak Reasons]^n\yZašto si ubio \r%s\y?\d
+JBR_TITLE_CUSTOM = ^n\yPritisni \r't' \yda bi napisao svoj razlog.\d
+JBR_TITLE_DENY = ^n\yPritisni \r'n' \yda negiraš ubistvo.\d
+JBR_MENU_BACK = Prethodna stranica
+JBR_MENU_NEXT = Sledeća stranica
+JBR_MENU_EXIT = Zatvori meni
+JBR_KILL_DENY = !t%s !nje negirao ubistvo igrača !t%s !n%L.
+JBR_KILL_REVIVE = i zato je oživljen
+JBR_KILL_SORRY = i izvinjava se
+JBR_KILL_REASON = !t%s !nje ubio !t%s!n. Razlog: !g%s 
+
+[ro]
+JBR_TITLE_WHY = \r[Motive JailBreak]^n\yDe ce l-ai omorat pe \r%s\y?\d
+JBR_TITLE_CUSTOM = ^n\yApasa \r't' \ypentru a introduce alt motiv.\d
+JBR_TITLE_DENY = ^n\yApasa \r'n' \yto pentru a anula acest kill.\d
+JBR_MENU_BACK = Pagina anterioara
+JBR_MENU_NEXT = Pagina urmatoare
+JBR_MENU_EXIT = Inchide meniul
+JBR_KILL_DENY = !t%s !na anulat moartea lui !t%s !n%L.
+JBR_KILL_REVIVE = astfel a fost reinviat
+JBR_KILL_SORRY = si spune "Imi pare rau"
+JBR_KILL_REASON = !t%s !nl-a omorat pe !t%s!n. Motiv: !g%s
+
+[nl]
+JBR_TITLE_WHY = \r[JailBreak Redenen]^n\yWaarom heb je \r%s\y gedood?\d
+JBR_TITLE_CUSTOM = ^n\yDruk op \r't' \yom zelf een reden op te geven.\d
+JBR_TITLE_DENY = ^n\yDruk op \r'n' \yom deze moord te ontkennen.\d
+JBR_MENU_BACK = Vorige pagina
+JBR_MENU_NEXT = Volgende pagina
+JBR_MENU_EXIT = Sluit het menu
+JBR_KILL_DENY = !t%s !nheeft de dood van !t%s !nontkent %L.
+JBR_KILL_REVIVE = daarom is hij terug tot leven gebracht
+JBR_KILL_SORRY = en zegt hij sorry
+JBR_KILL_REASON = !t%s !nheeft !t%s!n gedood. Reden: !g%s
+
+[bp]
+JBR_TITLE_WHY = \r[JailBreak Reasons]^n\yPorque voce matou \r%s\y?\d
+JBR_TITLE_CUSTOM  = ^n\yPressione \r't' \yPara reacao personalizada.\d
+JBR_TITLE_DENY = ^n\yPressione \r'n' \yNegar esse kill.\d
+JBR_MENU_BACK = Pagina anterior
+JBR_MENU_NEXT = Proxima pagina
+JBR_MENU_EXIT = Fechar o menu
+JBR_KILL_DENY = !t%s !nnegou a morte de !t%s !n%L.
+JBR_KILL_REVIVE = portanto, foi revivido.
+JBR_KILL_SORRY = e pede desculpas
+JBR_KILL_REASON = !t%s !nmatou !t%s!n. Reacao: !g%s
+
+[dk]
+JBR_TITLE_WHY = \r[JailBreak Reasons]^n\yHvorfor dræbte du \r%s\y?\d
+JBR_TITLE_CUSTOM = ^n\yTryk \r't' \yfor en brugerdefineret grund\d
+JBR_TITLE_DENY = ^n\yTryk \r'n' \yfor at afbryde dette dræb\d
+JBR_MENU_BACK = Tidligere side
+JBR_MENU_NEXT = Næste side
+JBR_MENU_EXIT = Luk menuen
+JBR_KILL_DENY = !t%s !nnægtede døden af !t%s !n%L.
+JBR_KILL_REVIVE = derfor blev han genoplivet.
+JBR_KILL_SORRY = og siger undskyld
+JBR_KILL_REASON = !t%s !ndræbte !t%s!n. Grund: !g%s
