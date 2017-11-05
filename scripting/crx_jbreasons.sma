@@ -3,29 +3,12 @@
 #include <engine>
 #include <hamsandwich>
 
-#define PLUGIN_VERSION "1.3"
+#define CC_COLORS_TYPE CC_COLORS_SHORT
+#include <cromchat>
 
-enum Color
-{
-	NORMAL = 1, // clients scr_concolor cvar color
-	GREEN, // Green Color
-	TEAM_COLOR, // Red, grey, blue
-	GREY, // grey
-	RED, // Red
-	BLUE, // Blue
-}
+#define PLUGIN_VERSION "1.4"
 
-new TeamName[][] = 
-{
-	"",
-	"TERRORIST",
-	"CT",
-	"SPECTATOR"
-}
-
-new const g_szPrefix[] = "^1[^4JB: Reasons^1]"
 new g_iVictim[33], g_iArraySize
-new g_msgSayText, g_msgTeamInfo, g_iMaxPlayers
 new g_cvCustom, g_cvDeny, g_cvExit
 new Array:g_aJailReasons
 
@@ -34,17 +17,15 @@ public plugin_init()
 	register_plugin("JB: Reasons Menu", PLUGIN_VERSION, "OciXCrom")
 	register_cvar("JailReasons", PLUGIN_VERSION, FCVAR_SERVER|FCVAR_SPONLY|FCVAR_UNLOGGED)
 	register_dictionary("JailReasons.txt")
-	register_event("DeathMsg", "eventPlayerKilled", "a")
-	register_clcmd("jailReason", "cmdJailReason")
-	register_clcmd("nightvision", "cmdDeny")
-	register_impulse(201, "cmdCustom")
+	register_event("DeathMsg", "OnPlayerKilled", "a")
+	register_clcmd("jailReason", "Cmd_JailReasons")
+	register_clcmd("nightvision", "Cmd_Deny")
+	register_impulse(201, "Cmd_Custom")
 	g_cvCustom = register_cvar("jbreasons_custom", "1")
 	g_cvDeny = register_cvar("jbreasons_deny", "2")
 	g_cvExit = register_cvar("jbreasons_exit", "1")
 	g_aJailReasons = ArrayCreate(128, 32)
-	g_msgSayText = get_user_msgid("SayText")
-	g_msgTeamInfo = get_user_msgid("TeamInfo")
-	g_iMaxPlayers = get_maxplayers()
+	CC_SetPrefix("[!gJB: Reasons!n]")
 	fileRead()
 }
 
@@ -78,7 +59,7 @@ fileRead()
 	}
 }
 
-public menuReasons(id)
+public ReasonsMenu(id)
 {
 	new szTitle[256], szItem[128], szName[32]
 	get_user_name(g_iVictim[id], szName, charsmax(szName))
@@ -96,7 +77,7 @@ public menuReasons(id)
 		add(szTitle, charsmax(szTitle), szItem)
 	}
 	
-	new iMenu = menu_create(szTitle, "handlerReasons")
+	new iMenu = menu_create(szTitle, "Handler_ReasonsMenu")
 	
 	for(new i; i < g_iArraySize; i++)
 	{
@@ -120,22 +101,17 @@ public menuReasons(id)
 	return PLUGIN_HANDLED
 }
 
-public handlerReasons(id, iMenu, iItem)
+public Handler_ReasonsMenu(id, iMenu, iItem)
 {
-	if(iItem == MENU_EXIT) g_iVictim[id] = 0
-	else
-	{
-		new szReason[64], szName[32]
-		get_user_name(id, szName, charsmax(szName))
-		ArrayGetString(g_aJailReasons, iItem, szReason, charsmax(szReason))
-		showReason(id, szReason)
-	}
-	
+	new szReason[64], szName[32]
+	get_user_name(id, szName, charsmax(szName))
+	ArrayGetString(g_aJailReasons, iItem, szReason, charsmax(szReason))
+	ShowReason(id, szReason)
 	menu_destroy(iMenu)
 	return PLUGIN_HANDLED
-}	
+}
 
-public eventPlayerKilled()
+public OnPlayerKilled()
 {
 	new iAttacker = read_data(1), iVictim = read_data(2)
 	
@@ -144,17 +120,17 @@ public eventPlayerKilled()
 		if(get_user_team(iAttacker) == 2 && get_user_team(iVictim) == 1)
 		{
 			g_iVictim[iAttacker] = iVictim
-			destroyMenu(iAttacker)
-			menuReasons(iAttacker)
+			DestroyMenu(iAttacker)
+			ReasonsMenu(iAttacker)
 		}
 	}
 }
 
-public cmdCustom(id)
+public Cmd_Custom(id)
 {
 	if(get_user_team(id) == 2 && has_access(id) && get_pcvar_num(g_cvCustom))
 	{
-		destroyMenu(id)
+		DestroyMenu(id)
 		client_cmd(id, "messagemode jailReason")
 		return PLUGIN_HANDLED
 	}
@@ -162,7 +138,7 @@ public cmdCustom(id)
 	return PLUGIN_CONTINUE
 }
 
-public cmdDeny(id)
+public Cmd_Deny(id)
 {
 	new iCvar = get_pcvar_num(g_cvDeny)
 	
@@ -171,8 +147,8 @@ public cmdDeny(id)
 		new szName[32], szName2[32]
 		get_user_name(id, szName, charsmax(szName))
 		get_user_name(g_iVictim[id], szName2, charsmax(szName2))
-		ColorChat(0, TEAM_COLOR, "%s %L", g_szPrefix, LANG_PLAYER, "JBR_KILL_DENY", szName, szName2, LANG_PLAYER, (iCvar > 1) ? "JBR_KILL_REVIVE" : "JBR_KILL_SORRY")
-		destroyMenu(id)
+		CC_SendMessage(0, "%L", LANG_PLAYER, "JBR_KILL_DENY", szName, szName2, LANG_PLAYER, (iCvar > 1) ? "JBR_KILL_REVIVE" : "JBR_KILL_SORRY")
+		DestroyMenu(id)
 		
 		if(iCvar > 1 && get_user_team(g_iVictim[id]) == 1 && !is_user_alive(g_iVictim[id]))
 			ExecuteHamB(Ham_CS_RoundRespawn, g_iVictim[id])
@@ -184,7 +160,7 @@ public cmdDeny(id)
 	return PLUGIN_CONTINUE
 }
 
-public cmdJailReason(id)
+public Cmd_JailReasons(id)
 {
 	if(!has_access(id))
 		return PLUGIN_HANDLED
@@ -194,21 +170,21 @@ public cmdJailReason(id)
 	remove_quotes(szArgs)
 	
 	if(szArgs[0] != EOS)
-		showReason(id, szArgs)
+		ShowReason(id, szArgs)
 		
 	return PLUGIN_HANDLED
 }
 
-showReason(id, szReason[])
+ShowReason(const id, const szReason[])
 {
 	new szName[32], szName2[32]
 	get_user_name(id, szName, charsmax(szName))
 	get_user_name(g_iVictim[id], szName2, charsmax(szName2))
-	ColorChat(0, TEAM_COLOR, "%s %L", g_szPrefix, LANG_PLAYER, "JBR_KILL_REASON", szName, szName2, szReason)
+	CC_SendMessage(0, "%L", LANG_PLAYER, "JBR_KILL_REASON", szName, szName2, szReason)
 	g_iVictim[id] = 0
 }
 
-destroyMenu(id)
+DestroyMenu(const id)
 {
 	new iNewMenu, iMenu = player_menu_info(id, iMenu, iNewMenu)
 	
@@ -216,111 +192,5 @@ destroyMenu(id)
 		show_menu(id, 0, "^n", 1)
 }
 	
-bool:has_access(id)
-	return g_iVictim[id] ? true : false
-
-ColorChat(id, Color:type, const msg[], {Float,Sql,Result,_}:...)
-{
-	static message[256];
-
-	switch(type)
-	{
-		case NORMAL: // clients scr_concolor cvar color
-		{
-			message[0] = 0x01;
-		}
-		case GREEN: // Green
-		{
-			message[0] = 0x04;
-		}
-		default: // White, Red, Blue
-		{
-			message[0] = 0x03;
-		}
-	}
-
-	vformat(message[1], charsmax(message) - 4, msg, 4);
-	
-	replace_all(message, charsmax(message), "!n", "^x01");
-	replace_all(message, charsmax(message), "!t", "^x03");
-	replace_all(message, charsmax(message), "!g", "^x04");
-
-	// Make sure message is not longer than 192 character. Will crash the server.
-	message[192] = '^0';
-
-	static team, ColorChange, index, MSG_Type;
-	
-	if(id)
-	{
-		MSG_Type = MSG_ONE;
-		index = id;
-	} else {
-		index = FindPlayer();
-		MSG_Type = MSG_ALL;
-	}
-	
-	team = get_user_team(index);
-	ColorChange = ColorSelection(index, MSG_Type, type);
-
-	ShowColorMessage(index, MSG_Type, message);
-		
-	if(ColorChange)
-	{
-		Team_Info(index, MSG_Type, TeamName[team]);
-	}
-}
-
-ShowColorMessage(id, type, message[])
-{
-	message_begin(type, g_msgSayText, _, id);
-	write_byte(id)		
-	write_string(message);
-	message_end();	
-}
-
-Team_Info(id, type, team[])
-{
-	message_begin(type, g_msgTeamInfo, _, id);
-	write_byte(id);
-	write_string(team);
-	message_end();
-
-	return 1;
-}
-
-ColorSelection(index, type, Color:Type)
-{
-	switch(Type)
-	{
-		case RED:
-		{
-			return Team_Info(index, type, TeamName[1]);
-		}
-		case BLUE:
-		{
-			return Team_Info(index, type, TeamName[2]);
-		}
-		case GREY:
-		{
-			return Team_Info(index, type, TeamName[0]);
-		}
-	}
-
-	return 0;
-}
-
-FindPlayer()
-{
-	static i;
-	i = -1;
-
-	while(i <= g_iMaxPlayers)
-	{
-		if(is_user_connected(++i))
-		{
-			return i;
-		}
-	}
-
-	return -1;
-}
+bool:has_access(const id)
+	return bool:g_iVictim[id]
