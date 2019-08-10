@@ -1,4 +1,4 @@
-﻿[en]
+[en]
 JBR_TITLE_WHY = \r[JailBreak Reasons]^n\yWhy did you kill \r%s\y?\d
 JBR_TITLE_CUSTOM = ^n\yPress \r't' \yfor a custom reason.\d
 JBR_TITLE_DENY = ^n\yPress \r'n' \yto deny this kill.\d
